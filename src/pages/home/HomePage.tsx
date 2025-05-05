@@ -6,7 +6,7 @@ function HomePage() {
       <header>
         <nav className="flex justify-end mt-5 mr-10">
           <Link
-            to="/login"
+            to="/profile"
             className="text-3xl font-medium hover:underline underline-offset-8"
           >
             Личный кабинет

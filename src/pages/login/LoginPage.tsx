@@ -1,7 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import LoginForm from "../../components/LoginForm/LoginForm";
 
-function LoginPage() {
+interface LoginPageProps {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+function LoginPage({ isAuthenticated, setIsAuthenticated }: LoginPageProps) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div>
       <div className="mt-5 ml-10">
@@ -12,7 +26,7 @@ function LoginPage() {
           Назад
         </Link>
       </div>
-      <LoginForm />
+      <LoginForm setIsAuthenticated={setIsAuthenticated} />
     </div>
   );
 }

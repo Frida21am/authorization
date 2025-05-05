@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-function LoginForm() {
+interface LoginFormProps {
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+function LoginForm({ setIsAuthenticated }: LoginFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -26,8 +30,10 @@ function LoginForm() {
     e.preventDefault();
     if (validate()) {
       alert("Форма отправлена");
+      setIsAuthenticated(true);
     }
   };
+
   return (
     <section className="w-[700px] mx-auto my-60 px-7 pt-12 pb-10 bg-white rounded-lg shadow-lg border-solid border-gray-100">
       <h2 className="text-5xl text-blue-400 text-center font-medium mb-3">
