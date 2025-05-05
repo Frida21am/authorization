@@ -9,7 +9,7 @@ function HomePage() {
             to="/login"
             className="text-3xl font-medium hover:underline underline-offset-8"
           >
-            Вход
+            Личный кабинет
           </Link>
         </nav>
         <h1 className="text-6xl text-blue-400 text-center font-medium mt-20">
