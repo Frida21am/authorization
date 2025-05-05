@@ -1,0 +1,23 @@
+import { Link } from "react-router-dom";
+
+function HomePage() {
+  return (
+    <div className="wrapper">
+      <header>
+        <nav className="flex justify-end mt-5 mr-10">
+          <Link
+            to="/login"
+            className="text-3xl font-medium hover:underline underline-offset-8"
+          >
+            Вход
+          </Link>
+        </nav>
+        <h1 className="text-6xl text-blue-400 text-center font-medium mt-20">
+          Главная
+        </h1>
+      </header>
+    </div>
+  );
+}
+
+export default HomePage;
