@@ -1,20 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import LoginForm from "../../components/LoginForm/LoginForm";
+import { useAuth } from "../../context/AuthContext";
 
-interface LoginPageProps {
-  isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
-}
-
-function LoginPage({ isAuthenticated, setIsAuthenticated }: LoginPageProps) {
+function LoginPage() {
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuth) {
       navigate("/profile");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuth, navigate]);
 
   return (
     <div>
@@ -26,7 +23,7 @@ function LoginPage({ isAuthenticated, setIsAuthenticated }: LoginPageProps) {
           Назад
         </Link>
       </div>
-      <LoginForm setIsAuthenticated={setIsAuthenticated} />
+      <LoginForm />
     </div>
   );
 }

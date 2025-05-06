@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import {
+  FILL_IN_EMAIL,
+  FILL_IN_PASSWORD,
+  INVALID_EMAIL_FORMAT,
+} from "../../shared/constants";
 
-interface LoginFormProps {
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
-}
+function LoginForm() {
+  const { setIsAuth } = useAuth();
 
-function LoginForm({ setIsAuthenticated }: LoginFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -15,12 +19,12 @@ function LoginForm({ setIsAuthenticated }: LoginFormProps) {
   const validate = (): boolean => {
     const newErrors: { email?: string; password?: string } = {};
     if (!email) {
-      newErrors.email = "Необходимо заполнить «Email»";
+      newErrors.email = FILL_IN_EMAIL;
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      newErrors.email = "Неверный формат email";
+      newErrors.email = INVALID_EMAIL_FORMAT;
     }
     if (!password) {
-      newErrors.password = "Необходимо заполнить «Пароль»";
+      newErrors.password = FILL_IN_PASSWORD;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -30,7 +34,7 @@ function LoginForm({ setIsAuthenticated }: LoginFormProps) {
     e.preventDefault();
     if (validate()) {
       alert("Форма отправлена");
-      setIsAuthenticated(true);
+      setIsAuth(true);
     }
   };
 

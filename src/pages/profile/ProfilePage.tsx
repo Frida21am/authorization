@@ -1,18 +1,16 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-interface ProfilePageProps {
-  isAuthenticated: boolean;
-}
-
-function ProfilePage({ isAuthenticated }: ProfilePageProps) {
+function ProfilePage() {
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuth) {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuth, navigate]);
 
   return (
     <div>
