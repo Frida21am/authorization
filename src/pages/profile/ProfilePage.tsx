@@ -1,17 +1,6 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
-  const { isAuth } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  }, [isAuth, navigate]);
-
   return (
     <div>
       <div className="mt-5 ml-10">

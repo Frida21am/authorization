@@ -1,18 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import LoginForm from "../../components/LoginForm/LoginForm";
-import { useAuth } from "../../context/AuthContext";
 
 function LoginPage() {
-  const { isAuth } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate("/profile");
-    }
-  }, [isAuth, navigate]);
-
   return (
     <div>
       <div className="mt-5 ml-10">
