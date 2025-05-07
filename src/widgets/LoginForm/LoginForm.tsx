@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/app/context/AuthContext";
-import { ValidationErrors } from "@/shared/constants";
 import LoginFormInput from "@/entities/LoginFormInput/LoginFormInput";
+import { validateLoginForm } from "@/features/ValidateLoginForm";
 
 export interface LoginFormState {
   email?: string;
@@ -17,22 +17,6 @@ function LoginForm() {
   const [errors, setErrors] = useState<LoginFormState>({});
   const { setIsAuth } = useAuth();
 
-  const validate = (): boolean => {
-    const newErrors: LoginFormState = {};
-    if (!formData.email) {
-      newErrors.email = ValidationErrors.FILL_IN_EMAIL;
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
-    ) {
-      newErrors.email = ValidationErrors.INVALID_EMAIL_FORMAT;
-    }
-    if (!formData.password) {
-      newErrors.password = ValidationErrors.FILL_IN_PASSWORD;
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -40,7 +24,10 @@ function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validate()) {
+    const validationErrors = validateLoginForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
       alert("Форма отправлена");
       setIsAuth(true);
     }
@@ -77,9 +64,9 @@ function LoginForm() {
         </button>
       </form>
       <p className="mt-4 text-center">
-        У вас нет аккаунта?{" "}
+        У вас нет аккаунта?
         <Link to="#">
-          <span className="text-blue-500 hover:underline">Регистрация</span>
+          <span className="text-blue-500 hover:underline"> Регистрация</span>
         </Link>
       </p>
     </section>
