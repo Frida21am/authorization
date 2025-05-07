@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
 import { ROUTES } from "@/shared/routes";
+import { useAuth } from "../context/AuthContext";
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
   children,

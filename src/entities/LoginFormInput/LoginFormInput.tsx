@@ -1,5 +1,3 @@
-import React from "react";
-
 interface LoginFormInputProps {
   label: string;
   type: string;

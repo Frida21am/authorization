@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
 import { ValidationErrors } from "@/shared/constants";
-import LoginFormInput from "../LoginFormInput/LoginFormInput";
+import { useAuth } from "@/app/context/AuthContext";
+import LoginFormInput from "@/entities/LoginFormInput/LoginFormInput";
 
 export interface LoginFormState {
   email?: string;

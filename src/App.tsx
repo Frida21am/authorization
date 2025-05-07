@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./app/context/AuthContext";
+import GuestRoute from "./app/layouts/GuestRoute";
+import PrivateRoute from "./app/layouts/PrivateRoute";
 import LoginPage from "./pages/login/LoginPage";
 import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
-import GuestRoute from "./components/layouts/GuestRoute";
-import PrivateRoute from "./components/layouts/PrivateRoute";
 
 function App() {
   return (
