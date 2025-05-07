@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ValidationErrors } from "@/shared/constants";
 import { useAuth } from "@/app/context/AuthContext";
+import { ValidationErrors } from "@/shared/constants";
 import LoginFormInput from "@/entities/LoginFormInput/LoginFormInput";
 
 export interface LoginFormState {
@@ -10,24 +10,32 @@ export interface LoginFormState {
 }
 
 function LoginForm() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [formData, setFormData] = useState<LoginFormState>({
+    email: "",
+    password: "",
+  });
   const [errors, setErrors] = useState<LoginFormState>({});
-
   const { setIsAuth } = useAuth();
 
   const validate = (): boolean => {
     const newErrors: LoginFormState = {};
-    if (!email) {
+    if (!formData.email) {
       newErrors.email = ValidationErrors.FILL_IN_EMAIL;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+    ) {
       newErrors.email = ValidationErrors.INVALID_EMAIL_FORMAT;
     }
-    if (!password) {
+    if (!formData.password) {
       newErrors.password = ValidationErrors.FILL_IN_PASSWORD;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,16 +56,16 @@ function LoginForm() {
         <LoginFormInput
           label="Email *"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           error={errors.email}
           id="email"
         />
         <LoginFormInput
           label="Пароль *"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           error={errors.password}
           id="password"
         />
