@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/routes";
 
 function HomePage() {
   return (
@@ -6,7 +7,7 @@ function HomePage() {
       <header>
         <nav className="flex justify-end mt-5 mr-10">
           <Link
-            to="/profile"
+            to={ROUTES.profile}
             className="text-3xl font-medium hover:underline underline-offset-8"
           >
             Личный кабинет

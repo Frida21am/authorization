@@ -1,30 +1,30 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import {
-  FILL_IN_EMAIL,
-  FILL_IN_PASSWORD,
-  INVALID_EMAIL_FORMAT,
-} from "../../shared/constants";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { ValidationErrors } from "@/shared/constants";
+import LoginFormInput from "../LoginFormInput/LoginFormInput";
+
+export interface LoginFormState {
+  email?: string;
+  password?: string;
+}
 
 function LoginForm() {
-  const { setIsAuth } = useAuth();
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  );
+  const [errors, setErrors] = useState<LoginFormState>({});
+
+  const { setIsAuth } = useAuth();
 
   const validate = (): boolean => {
-    const newErrors: { email?: string; password?: string } = {};
+    const newErrors: LoginFormState = {};
     if (!email) {
-      newErrors.email = FILL_IN_EMAIL;
+      newErrors.email = ValidationErrors.FILL_IN_EMAIL;
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      newErrors.email = INVALID_EMAIL_FORMAT;
+      newErrors.email = ValidationErrors.INVALID_EMAIL_FORMAT;
     }
     if (!password) {
-      newErrors.password = FILL_IN_PASSWORD;
+      newErrors.password = ValidationErrors.FILL_IN_PASSWORD;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -39,67 +39,31 @@ function LoginForm() {
   };
 
   return (
-    <section className="w-[700px] mx-auto my-60 px-7 pt-12 pb-10 bg-white rounded-lg shadow-lg border-solid border-gray-100">
+    <section className="w-[700px] mx-auto my-60 px-7 pt-12 pb-10 bg-white rounded-lg shadow-lg border border-solid border-gray-100">
       <h2 className="text-5xl text-blue-400 text-center font-medium mb-3">
         Авторизация
       </h2>
       <p className="text-center text-lg mb-8">Введите ваш логин и пароль</p>
       <form onSubmit={handleSubmit} noValidate aria-describedby="form-errors">
-        <div className="mb-5">
-          <label htmlFor="email" className="text-lg">
-            Email *
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="mt-1 block w-full p-5 border-solid border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-            value={email}
-            placeholder="Введите email"
-            onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={errors.email ? "true" : "false"}
-            aria-describedby={errors.email ? "email-error" : undefined}
-            required
-          />
-          {errors.email && (
-            <span
-              id="email-error"
-              role="alert"
-              className="text-red-600 inline-block mt-1"
-            >
-              {errors.email}
-            </span>
-          )}
-        </div>
-        <div className="mb-8">
-          <label htmlFor="password" className="text-lg">
-            Пароль *
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="mt-1 block w-full p-5 border-solid border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-            value={password}
-            placeholder="Введите пароль"
-            onChange={(e) => setPassword(e.target.value)}
-            aria-invalid={errors.password ? "true" : "false"}
-            aria-describedby={errors.password ? "password-error" : undefined}
-            required
-          />
-          {errors.password && (
-            <span
-              id="password-error"
-              role="alert"
-              className="text-red-600 inline-block mt-1"
-            >
-              {errors.password}
-            </span>
-          )}
-        </div>
+        <LoginFormInput
+          label="Email *"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={errors.email}
+          id="email"
+        />
+        <LoginFormInput
+          label="Пароль *"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={errors.password}
+          id="password"
+        />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-5 rounded-md hover:bg-blue-700 transition duration-200"
+          className="mt-2 py-5 w-full bg-blue-600 text-white cursor-pointer rounded-md hover:bg-blue-700 transition duration-200"
         >
           Войти
         </button>

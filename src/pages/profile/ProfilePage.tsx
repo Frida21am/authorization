@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/routes";
 
 function ProfilePage() {
   return (
     <div>
       <div className="mt-5 ml-10">
         <Link
-          to="/"
+          to={ROUTES.home}
           className="text-3xl font-medium hover:underline underline-offset-8"
         >
           Назад
