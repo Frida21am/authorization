@@ -7,14 +7,14 @@ interface LoginFormInputProps {
   id: string;
 }
 
-const LoginFormInput: React.FC<LoginFormInputProps> = ({
+function LoginFormInput({
   label,
   type,
   value,
   onChange,
   error,
   id,
-}) => {
+}: LoginFormInputProps) {
   return (
     <div className="my-4">
       <label htmlFor={id} className="text-lg">
@@ -42,6 +42,6 @@ const LoginFormInput: React.FC<LoginFormInputProps> = ({
       )}
     </div>
   );
-};
+}
 
 export default LoginFormInput;

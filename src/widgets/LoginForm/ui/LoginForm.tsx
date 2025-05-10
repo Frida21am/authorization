@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/app/context/AuthContext";
-import LoginFormInput from "@/entities/LoginFormInput/LoginFormInput";
 import { validateLoginForm } from "@/features/ValidateLoginForm";
+import LoginFormInput from "@/shared/ui/LoginFormInput/LoginFormInput";
 
 export interface LoginFormState {
   email?: string;
@@ -34,7 +34,7 @@ function LoginForm() {
   };
 
   return (
-    <section className="w-[700px] mx-auto my-60 px-7 pt-12 pb-10 bg-white rounded-lg shadow-lg border border-solid border-gray-100">
+    <section className="w-[700px] mx-auto my-30 px-7 pt-12 pb-10 bg-white rounded-lg shadow-lg border border-solid border-gray-100">
       <h2 className="text-5xl text-blue-400 text-center font-medium mb-3">
         Авторизация
       </h2>

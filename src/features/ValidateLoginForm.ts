@@ -1,4 +1,4 @@
-import { ValidationErrors } from "@/shared/constants";
+import { ValidationErrors } from "@/shared/const/constants";
 
 export interface LoginFormState {
   email?: string;
