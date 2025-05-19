@@ -9,7 +9,7 @@ interface PrivateRouteProps {
 function PrivateRoute({ children }: PrivateRouteProps) {
   const { isAuth } = useAuth();
 
-  return isAuth ? <>{children}</> : <Navigate to={ROUTES.login} />;
+  return isAuth ? children : <Navigate to={ROUTES.login} />;
 }
 
 export default PrivateRoute;

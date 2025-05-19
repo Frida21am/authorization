@@ -1,12 +1,12 @@
 import { ValidationErrors } from "@/shared/const/constants";
 
-export interface LoginFormState {
+export interface FormState {
   email?: string;
   password?: string;
 }
 
-export const validateLoginForm = (formData: LoginFormState): LoginFormState => {
-  const newErrors: LoginFormState = {};
+export const validateForm = (formData: FormState): FormState => {
+  const newErrors: FormState = {};
 
   // Валидация email
   if (!formData.email) {

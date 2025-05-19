@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { validateLoginForm } from "@/features/ValidateLoginForm";
 import LoginFormInput from "@/shared/ui/LoginFormInput/LoginFormInput";
 import useAuth from "@/app/context/useAuth";
+import { loginUser } from "../api/authApi";
+import { validateForm } from "@/features/ValidateForm";
 
 export interface LoginFormState {
   email?: string;
@@ -14,22 +15,30 @@ function LoginForm() {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<LoginFormState>({});
-  const { setIsAuth } = useAuth();
+
+  const [errors, setErrors] = useState<Partial<LoginFormState>>({});
+  const { login } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validationErrors = validateLoginForm(formData);
+
+    const validationErrors = validateForm(formData);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      alert("Форма отправлена");
-      setIsAuth(true);
+      try {
+        const response = await loginUser(formData.email!, formData.password!);
+        const token = response.token;
+        login(token);
+      } catch (error) {
+        const errorMessage = (error as Error).message || "Произошла ошибка";
+        alert(errorMessage);
+      }
     }
   };
 
