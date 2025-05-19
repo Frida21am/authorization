@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./app/styles/index.css";
-import { AuthProvider } from "./app/context/AuthContext";
 import Layout from "./app/layouts/Layout";
 import GuestRoute from "./app/routes/GuestRoute";
 import PrivateRoute from "./app/routes/PrivateRoute";
@@ -8,6 +7,7 @@ import HomePage from "./pages/home/ui/HomePage";
 import LoginPage from "./pages/login/ui/LoginPage";
 import NotFoundPage from "./pages/not-found/ui/NotFoundPage";
 import ProfilePage from "./pages/profile/ui/ProfilePage";
+import { AuthProvider } from "./app/context/AuthProvider";
 
 function App() {
   return (

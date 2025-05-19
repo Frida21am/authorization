@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/app/context/AuthContext";
 import { validateLoginForm } from "@/features/ValidateLoginForm";
 import LoginFormInput from "@/shared/ui/LoginFormInput/LoginFormInput";
+import useAuth from "@/app/context/useAuth";
 
 export interface LoginFormState {
   email?: string;
