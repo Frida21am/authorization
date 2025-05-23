@@ -11,4 +11,17 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Разделение на чанки по страницам
+          if (id.includes("src/pages/")) {
+            // Имя чанка будет основано на имени папки страницы
+            return id.split("src/pages/")[1].split("/")[0];
+          }
+        },
+      },
+    },
+  },
 });
