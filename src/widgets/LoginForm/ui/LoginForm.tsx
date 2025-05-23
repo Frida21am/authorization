@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginFormInput from "@/shared/ui/LoginFormInput/LoginFormInput";
 import useAuth from "@/app/context/useAuth";
@@ -9,27 +9,25 @@ export interface LoginFormState {
   email?: string;
   password?: string;
 }
-
 function LoginForm() {
-  const [formData, setFormData] = useState<LoginFormState>({
-    email: "",
-    password: "",
-  });
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
-  const [errors, setErrors] = useState<Partial<LoginFormState>>({});
+  const [errors, setErrors] = useState<
+    Partial<{ email: string; password: string }>
+  >({});
+
   const { login } = useAuth();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = {
+      email: emailRef.current?.value,
+      password: passwordRef.current?.value,
+    };
 
     const validationErrors = validateForm(formData);
     setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await loginUser(formData.email!, formData.password!);
@@ -52,16 +50,14 @@ function LoginForm() {
         <LoginFormInput
           label="Email *"
           type="email"
-          value={formData.email}
-          onChange={handleChange}
+          ref={emailRef}
           error={errors.email}
           id="email"
         />
         <LoginFormInput
           label="Пароль *"
           type="password"
-          value={formData.password}
-          onChange={handleChange}
+          ref={passwordRef}
           error={errors.password}
           id="password"
         />
