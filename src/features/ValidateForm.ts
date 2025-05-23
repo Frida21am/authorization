@@ -20,7 +20,7 @@ export const validateForm = (formData: FormState): FormState => {
     newErrors.password = ValidationErrors.FILL_IN_PASSWORD;
   } else if (formData.password.length < 6) {
     newErrors.password = ValidationErrors.SIX_CHARACTERS_IN_PASSWORD;
-  } else if (!/[A-Z]/.test(formData.password)) {
+  } else if (!/[A-ZА-Я]/.test(formData.password)) {
     newErrors.password = ValidationErrors.CAPITAL_LETTER_IN_PASSWORD;
   } else if (!/[0-9]/.test(formData.password)) {
     newErrors.password = ValidationErrors.NUMBER_IN_PASSWORD;
